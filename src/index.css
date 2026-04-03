@@ -1,0 +1,131 @@
+@import '@fontsource/caveat/400.css';
+@import '@fontsource/caveat/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 220 15% 20%;
+
+    --card: 40 30% 97%;
+    --card-foreground: 220 15% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+
+    --primary: 220 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 35 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 15% 92%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 150 50% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 30% 85%;
+    --input: 214 30% 85%;
+    --ring: 220 70% 55%;
+
+    --radius: 0.75rem;
+
+    --notebook-line: 210 60% 82%;
+    --notebook-margin: 0 70% 60%;
+    --pencil: 30 5% 35%;
+    --pencil-light: 30 5% 65%;
+    --obstacle: 20 15% 55%;
+    --player1: 0 75% 55%;
+    --player2: 220 75% 55%;
+    --center-goal: 45 90% 55%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Caveat', cursive;
+  }
+}
+
+@layer components {
+  .notebook-bg {
+    background-color: hsl(40, 30%, 97%);
+    background-image:
+      linear-gradient(hsl(var(--notebook-line)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--notebook-line)) 1px, transparent 1px);
+    background-size: 30px 30px;
+    position: relative;
+  }
+
+  .notebook-bg::before {
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: hsl(var(--notebook-margin));
+    opacity: 0.6;
+    z-index: 1;
+  }
+
+  .btn-notebook {
+    @apply px-6 py-3 rounded-lg font-bold text-xl tracking-wide transition-all duration-200;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border: 2px solid hsl(var(--pencil));
+    box-shadow: 3px 3px 0px hsl(var(--pencil));
+  }
+
+  .btn-notebook:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px hsl(var(--pencil));
+  }
+
+  .btn-notebook:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px hsl(var(--pencil));
+  }
+
+  .input-notebook {
+    @apply w-full px-4 py-3 rounded-lg text-xl;
+    background: hsl(40, 30%, 97%);
+    border: 2px solid hsl(var(--pencil-light));
+    color: hsl(var(--foreground));
+    font-family: 'Caveat', cursive;
+  }
+
+  .input-notebook:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.2);
+  }
+
+  .card-notebook {
+    background: hsl(40, 30%, 97%);
+    border: 2px solid hsl(var(--pencil-light));
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0px hsl(var(--pencil-light));
+  }
+}

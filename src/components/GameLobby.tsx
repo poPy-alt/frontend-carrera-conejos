@@ -12,7 +12,7 @@ const GameLobby = ({ onJoin }: GameLobbyProps) => {
     return (
       <div className="flex items-center justify-center min-h-screen notebook-bg">
         <div className="card-notebook p-8 w-full max-w-md mx-4 text-center">
-          <h2 className="text-4xl font-bold mb-6 text-foreground">🌍 Multijugador WiFi</h2>
+          <h2 className="text-4xl font-bold mb-6 text-foreground">🌍 Multijugador Online</h2>
           <div className="space-y-4">
             <button 
               onClick={() => setMode('create')}

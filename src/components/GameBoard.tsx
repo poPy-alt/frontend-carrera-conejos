@@ -325,19 +325,25 @@ const GameBoard = ({ player1Name, player2Name, firstPlayer, onGameEnd, onRestart
         <p className="text-2xl font-bold bg-white/50 px-4 py-1 rounded-full shadow-sm">{msg}</p>
       </div>
 
-      <div className="flex items-center gap-6 mb-4">
+      <div className="flex flex-col items-center gap-2 mb-4 w-full px-2">
         <button onClick={rollDice}
           disabled={rolling || movesLeft > 0 || over || !isMyTurn}
-          className={`btn-notebook text-2xl px-10 ${(movesLeft > 0 || over || !isMyTurn) ? 'opacity-30' : 'animate-pulse hover:scale-105'}`}>
-          🎲 Tirar
+          className={`btn-notebook text-2xl px-10 w-full max-w-xs ${(movesLeft > 0 || over || !isMyTurn) ? 'opacity-30' : 'animate-pulse hover:scale-105'}`}>
+          🎲 Tirar Dado
         </button>
         <div className="w-16 h-16 flex items-center justify-center">
             {(dice > 0 || rolling) && <div className={rolling ? 'animate-dice-roll' : 'animate-bounce-in'}><DiceFace value={dice} /></div>}
         </div>
       </div>
 
-      <div className="card-notebook p-2 shadow-2xl relative bg-white/80 backdrop-blur-sm overflow-hidden" style={{ width: BOARD_W + 16, height: BOARD_H + 16 }}>
-        <svg width={BOARD_W} height={BOARD_H} className="block overflow-visible"style={{ touchAction: 'none' }}>
+      <div className="card-notebook p-2 shadow-2xl relative bg-white/80 backdrop-blur-sm overflow-hidden w-full max-w-[100vw] flex justify-center items-center" 
+           style={{ touchAction: 'none' }}>
+        <div className="relative origin-top" style={{ 
+          width: BOARD_W, 
+          height: BOARD_H,
+          transform: `scale(${typeof window !== 'undefined' && window.innerWidth < BOARD_W ? (window.innerWidth - 32) / BOARD_W : 1})`
+        }}>
+          <svg width={BOARD_W} height={BOARD_H} className="block overflow-visible">
           {Array.from({ length: ROWS }).map((_, r) => (
             <line key={`h${r}`} x1={screenX(0)} y1={screenY(r)} x2={screenX(COLS - 1)} y2={screenY(r)} stroke={roomScenario === 'pandas' ? '#d0e0d0' : "hsl(210,60%,82%)"} strokeWidth="1" />
           ))}
@@ -376,18 +382,25 @@ const GameBoard = ({ player1Name, player2Name, firstPlayer, onGameEnd, onRestart
             Array.from({ length: COLS }).map((_, c) => {
               const reachable_here = reachable.has(posKey(r, c));
               return (
-                <circle 
-                  key={`hit-${r}-${c}`} 
-                  cx={screenX(c)} cy={screenY(r)} 
-                  r={12} 
-                  fill="transparent" 
-                  onClick={() => reachable_here && handleClick(r, c)} 
-                  style={{ cursor: reachable_here ? 'pointer' : 'default' }} 
-                />
+                  <circle 
+                    key={`hit-${r}-${c}`} 
+                    cx={screenX(c)} cy={screenY(r)} 
+                    r={reachable_here ? 20 : 12} 
+                    fill="transparent" 
+                    onClick={() => reachable_here && handleClick(r, c)}
+                    onTouchStart={(e) => {
+                      if (reachable_here) {
+                        e.preventDefault();
+                        handleClick(r, c);
+                      }
+                    }}
+                    style={{ cursor: reachable_here ? 'pointer' : 'default' }} 
+                  />
               );
             })
           )}
         </svg>
+        </div>
       </div>
 
       {partnerLeft && (
